@@ -71,8 +71,10 @@ duration_numeric = as.numeric(duration)
 hist(duration_numeric, breaks=8000,xlim=c(0,8000),main="Distribution of Duration")
 
 ```
-… which is shown in the screenshot below:
-![My helpful screenshot](https://github.com/yunhaolucky/yunhaolucky.github.io/blob/master/assets/bikeshare/week1/distributionofduration.png?raw=true)
+
+![Distribution of Duration](https://github.com/yunhaolucky/yunhaolucky.github.io/blob/master/assets/bikeshare/week1/distributionofduration.png?raw=true)
+![Distribution of Duration(<10 min)](https://github.com/yunhaolucky/yunhaolucky.github.io/blob/master/assets/bikeshare/week1/distributionofduration10min.png?raw=true)
+
 * Stations
   * There are `321` stations.
   * The distribution of number of starting rides for each group is left skewed.
