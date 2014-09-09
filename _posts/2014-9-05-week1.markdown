@@ -71,9 +71,23 @@ duration_numeric = as.numeric(duration)
 hist(duration_numeric, breaks=8000,xlim=c(0,8000),main="Distribution of Duration")
 
 ```
+  * Duration
 
 ![Distribution of Duration](https://github.com/yunhaolucky/yunhaolucky.github.io/blob/master/assets/bikeshare/week1/distributionofduration.png?raw=true)
+
+The distribution of duration(secs) has a large number of occurrences between (0, 2000). It has a peek around 800 and skewed to the right in the upper value part. Most rides last for less than half an hour(1800s) and the peak of duration is about 15 minutes.
+
 ![Distribution of Duration(<10 min)](https://github.com/yunhaolucky/yunhaolucky.github.io/blob/master/assets/bikeshare/week1/distributionofduration10min.png?raw=true)
+
+We notice there is another peak in the distribution of duration. There are more than 1000 people return their bikes within 5 second. My guess is people's malfunctions.
+
+  * Start_time
+
+    ```
+    Min.        1st Qu.       Median           Mean          3rd Qu.      Max.
+"2014-04-01" "2014-04-24" "2014-05-19" "2014-05-17" "2014-06-09" "2014-06-30"
+  ```
+  ![Distribution of ride date](https://github.com/yunhaolucky/yunhaolucky.github.io/blob/master/assets/bikeshare/week1/distribution_of_Ride_date.png?raw=true)
 
 * Stations
   * There are `321` stations.
