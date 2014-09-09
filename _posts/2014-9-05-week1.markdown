@@ -1,0 +1,97 @@
+---
+layout: post
+title:  "Week 1"
+date:   2014-09-05 09:22:44
+categories: bikeshare
+---
+
+I got the data from Bike Share data in `2nd quarter of 2014` from [Capital Bike Share](http://www.capitalbikeshare.com/trip-history-data).
+
+```r
+#Input data
+q2data = read.csv("~/Downloads/2014-Q2-Trips-History-Data.csv")
+```
+```
+summary(q2data)
+      Duration                Start.date
+ 0h 0m 3s :  1028   4/12/2014 15:53:    41  
+ 0h 6m 24s:   965   4/14/2014 17:33:    41  
+ 0h 7m 8s :   946   5/8/2014 18:10 :    41  
+ 0h 5m 51s:   945   4/5/2014 12:21 :    40  
+ 0h 6m 10s:   945   5/20/2014 18:07:    40  
+ 0h 5m 15s:   942   4/19/2014 15:54:    39  
+ (Other)  :897863   (Other)        :903392  
+                              Start.Station    Start.terminal
+ Lincoln Memorial                    : 20338   Min.   :31000  
+ Massachusetts Ave & Dupont Circle NW: 19652   1st Qu.:31202  
+ Columbus Circle / Union Station     : 19163   Median :31243  
+ Jefferson Dr & 14th St SW           : 17589   Mean   :31300  
+ 15th & P St NW                      : 12815   3rd Qu.:31400  
+ Thomas Circle                       : 12700   Max.   :32048  
+ (Other)                             :801377
+            End.date
+ 6/2/2014 17:50 :    48  
+ 4/12/2014 14:59:    46  
+ 4/12/2014 14:29:    44  
+ 4/12/2014 17:56:    44  
+ 4/12/2014 14:43:    43  
+ 6/23/2014 18:22:    43  
+ (Other)        :903366  
+                                  End.Station      End.terminal  
+ Massachusetts Ave & Dupont Circle NW   : 21653   Min.   :31000  
+ Lincoln Memorial                       : 20230   1st Qu.:31204  
+ Columbus Circle / Union Station        : 19105   Median :31242  
+ Jefferson Dr & 14th St SW              : 18212   Mean   :31301  
+ 15th & P St NW                         : 14204   3rd Qu.:31312  
+ Smithsonian / Jefferson Dr & 12th St SW: 12335   Max.   :32048  
+ (Other)                                :797895   NA's   :5
+     Bike.          Subscriber.Type  
+ W21384 :   652   Casual    :225782  
+ W21094 :   607   Registered:677852  
+ W21634 :   603
+ W21430 :   602
+ W00300 :   600
+ W21420 :   596
+ (Other):899974
+ ```
+* Duration and Time
+  * The data comes from rides between `4/1/2014` and `7/1/2014`.
+  * In those `91` days, There are `903634` rides in total.
+  * The total riding time is `288206.6 hours`, averaging `19.517 min` per ride.
+
+```r
+duration = q2data$Duration
+duration = as.difftime(duration,"%Hh %Mm %Ss",units="secs")
+#sum of duration
+sum(duration, na.rm = TRUE)
+
+#histogram of duration
+duration_numeric = as.numeric(duration)
+hist(duration_numeric, breaks=800,xlim=c(0,8000))
+
+```
+
+* Stations
+  * There are `321` stations.
+  * The distribution of number of starting rides for each group is left skewed.
+    * average is `2815.59`
+    * standard deviation is `3290.818`
+    * Top Five Start stations are: (# of rides)
+      * "Lincoln Memorial" `(20338)`,
+      * "Massachusetts Ave & Dupont Circle NW"`(19652)`,
+      * "Columbus Circle / Union Station"`(19163)`,
+      * "Jefferson Dr & 14th St SW" `(17585)`,
+      * "15th & P St NW" `(12815)`
+  * The distribution of number of starting rides for each group is left skewed,too.
+    * average is `2815.044`
+    * standard deviation is `3443.536`
+
+  * In & Out difference for each station( `# of start rides - # of end rides`)
+    * Average is `5.533214e-06`
+    * histogram of in & out difference
+    * Top Five In Out difference
+      * "16th & Harvard St NW" `(3096)`
+      * "14th & Harvard St NW" `(1694)`
+      * "Columbia Rd & Belmont St NW" `(1514)`
+      * "39th & Calvert St NW / Stoddert"`(1386)`
+      * "Adams Mill & Columbia Rd NW" `(1298)`
