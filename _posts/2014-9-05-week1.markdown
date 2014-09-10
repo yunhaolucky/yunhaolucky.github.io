@@ -4,16 +4,17 @@ title:  "Week 1"
 date:   2014-09-05 09:22:44
 categories: bikeshare
 ---
+# Summary
 
 I got the data from Bike Share data in `2nd quarter of 2014` from [Capital Bike Share](http://www.capitalbikeshare.com/trip-history-data).
 
-* Duration and Time
+
+
+#Duration and Time
   * The data comes from rides between `4/1/2014` and `7/1/2014`.
   * In those `91` days, There are `903634` rides in total.
   * The total riding time is `288206.6 hours`, averaging `19.517 min` per ride.
-
-
-  * Duration
+### Duration
 
 ![Distribution of Duration](https://github.com/yunhaolucky/yunhaolucky.github.io/blob/master/assets/bikeshare/week1/distributionofduration.png?raw=true)
 
@@ -23,9 +24,9 @@ The distribution of duration(secs) has a large number of occurrences between (0,
 
 We notice there is another peak in the distribution of duration. There are more than 1000 people return their bikes within 5 second. My guess is people's malfunctions.
 
-  * Start_date (Distribution of date)
+### Start_date (Distribution of date)
 
-    ```
+```
     Min.        1st Qu.       Median           Mean          3rd Qu.      Max.
 "2014-04-01" "2014-04-24" "2014-05-19" "2014-05-17" "2014-06-09" "2014-06-30"
   ```
@@ -33,7 +34,7 @@ We notice there is another peak in the distribution of duration. There are more 
 
   The distribution is randomized in some extent but there are several outliers worthy to mention. There are `4` days whose number of rides is smaller than 5000: `"2014-04-07" "2014-04-15" "2014-04-29" "2014-04-30"` and 2 days greater than 13000. `"2014-04-12" "2014-04-13"`.
 
-  * Start Time (Distribution of start time )
+### Start Time (Distribution of start time )
 
   ```
   Min.      1st Qu.       Median      Mean    3rd Qu.     Max.
@@ -44,7 +45,7 @@ We notice there is another peak in the distribution of duration. There are more 
   Most of the ride are taken between `7am` and `8pm`, with two peaks at `8am` and `5-6pm`.
   The number of rides from `23pm` to `5am` is relatively small.
 
-* Stations
+# Stations
   * There are `321` stations.
   * The distribution of number of starting rides of each station is positively skewed.
     * average is `2815.59`
@@ -60,6 +61,7 @@ We notice there is another peak in the distribution of duration. There are more 
     * standard deviation is `3443.536`
   * In & Out difference for each station( `# of start rides - # of end rides`)
     * Average `< 0.0001`
+
     ![Distribution of ride time](https://github.com/yunhaolucky/yunhaolucky.github.io/blob/master/assets/bikeshare/week1/distribution_in_out.png?raw=true)
     ![Distribution of ride time](https://github.com/yunhaolucky/yunhaolucky.github.io/blob/master/assets/bikeshare/week1/hist_in_out.png?raw=true)
 
@@ -70,6 +72,9 @@ We notice there is another peak in the distribution of duration. There are more 
       * "Columbia Rd & Belmont St NW" `(1514)`
       * "39th & Calvert St NW / Stoddert"`(1386)`
       * "Adams Mill & Columbia Rd NW" `(1298)`
+
+
+
 
 ```r
 ############ Read Data from .csv ############
