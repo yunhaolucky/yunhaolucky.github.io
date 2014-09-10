@@ -6,14 +6,24 @@ categories: bikeshare
 ---
 # Summary
 
-I got the data from Bike Share data in `2nd quarter of 2014` from [Capital Bike Share](http://www.capitalbikeshare.com/trip-history-data).
+* I got the data from Bike Share data in `2nd quarter of 2014` from [Capital Bike Share](http://www.capitalbikeshare.com/trip-history-data).
+* I did analysis on the distribution of single variable in the dataset.
+   * Duration : Most rides last with in 20 min.
+   * Start date : I do not find a specific pattern except for several extreme values. (Weekday has minor influence on the distribution of rides.)
+   * Start time : People tends to use bikeshare in daytime(6am - 10pm). Bikeshare is heavily used during rush hours(8am & 5-6pm)
+   * Stations : The use of station is balanced in general with several extreme outliers.
+
+* Questions and Improvement
+  * How can I compare two variables e.g whether registered subscriber has longer duration?
+  * How can I know the location of stations?
+  * The thing I find difficult is to describe the plot. How can I analysis the plot systematically?
 
 
-
-#Duration and Time
+# Duration and Time
   * The data comes from rides between `4/1/2014` and `7/1/2014`.
   * In those `91` days, There are `903634` rides in total.
   * The total riding time is `288206.6 hours`, averaging `19.517 min` per ride.
+
 ### Duration
 
 ![Distribution of Duration](https://github.com/yunhaolucky/yunhaolucky.github.io/blob/master/assets/bikeshare/week1/distributionofduration.png?raw=true)
@@ -61,20 +71,17 @@ We notice there is another peak in the distribution of duration. There are more 
     * standard deviation is `3443.536`
   * In & Out difference for each station( `# of start rides - # of end rides`)
     * Average `< 0.0001`
-
-    ![Distribution of ride time](https://github.com/yunhaolucky/yunhaolucky.github.io/blob/master/assets/bikeshare/week1/distribution_in_out.png?raw=true)
-    ![Distribution of ride time](https://github.com/yunhaolucky/yunhaolucky.github.io/blob/master/assets/bikeshare/week1/hist_in_out.png?raw=true)
-
-        The difference of In-rides and Out-rides of each station is ploted in the above figure. Most of the stations have a good balance between in and out while there also exist some extreme points.
     * Top Five In Out difference `(In - Out)`
       * "16th & Harvard St NW" `(3096)`
       * "14th & Harvard St NW" `(1694)`
       * "Columbia Rd & Belmont St NW" `(1514)`
-      * "39th & Calvert St NW / Stoddert"`(1386)`
+      * "39th & Calvert St NW / Stoddert" `(1386)`
       * "Adams Mill & Columbia Rd NW" `(1298)`
 
+  ![Distribution of ride time](https://github.com/yunhaolucky/yunhaolucky.github.io/blob/master/assets/bikeshare/week1/distribution_in_out.png?raw=true)
+  ![Distribution of ride time](https://github.com/yunhaolucky/yunhaolucky.github.io/blob/master/assets/bikeshare/week1/hist_in_out.png?raw=true)
 
-
+The difference of In-rides and Out-rides of each station is plotted in the above figure. Most of the stations have a good balance between in and out while there also exist some extreme points.
 
 ```r
 ############ Read Data from .csv ############
