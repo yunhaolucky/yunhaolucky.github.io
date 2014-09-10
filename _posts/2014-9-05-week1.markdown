@@ -7,10 +7,6 @@ categories: bikeshare
 
 I got the data from Bike Share data in `2nd quarter of 2014` from [Capital Bike Share](http://www.capitalbikeshare.com/trip-history-data).
 
-```r
-#Input data
-q2data = read.csv("~/Downloads/2014-Q2-Trips-History-Data.csv")
-```
 ```
 summary(q2data)
       Duration                Start.date
@@ -59,18 +55,7 @@ summary(q2data)
   * In those `91` days, There are `903634` rides in total.
   * The total riding time is `288206.6 hours`, averaging `19.517 min` per ride.
 
-```r
-duration = q2data$Duration
-duration = as.difftime(duration,"%Hh %Mm %Ss",units="secs")
 
-#sum of duration
-sum(duration, na.rm = TRUE)
-
-#histogram of duration
-duration_numeric = as.numeric(duration)
-hist(duration_numeric, breaks=8000,xlim=c(0,8000),main="Distribution of Duration")
-
-```
   * Duration
 
 ![Distribution of Duration](https://github.com/yunhaolucky/yunhaolucky.github.io/blob/master/assets/bikeshare/week1/distributionofduration.png?raw=true)
@@ -81,13 +66,18 @@ The distribution of duration(secs) has a large number of occurrences between (0,
 
 We notice there is another peak in the distribution of duration. There are more than 1000 people return their bikes within 5 second. My guess is people's malfunctions.
 
-  * Start_time
+  * Start_date
 
     ```
     Min.        1st Qu.       Median           Mean          3rd Qu.      Max.
 "2014-04-01" "2014-04-24" "2014-05-19" "2014-05-17" "2014-06-09" "2014-06-30"
   ```
   ![Distribution of ride date](https://github.com/yunhaolucky/yunhaolucky.github.io/blob/master/assets/bikeshare/week1/distribution_of_Ride_date.png?raw=true)
+
+  The distribution is randomized in some extent but there are several outliers worthy to mention. There are `4` days whose number of rides is smaller than 5000: `"2014-04-07" "2014-04-15" "2014-04-29" "2014-04-30"` and 2 days greater than 13000. `"2014-04-12" "2014-04-13"`.
+
+  *Start Time
+  ![Distribution of ride time](https://github.com/yunhaolucky/yunhaolucky.github.io/blob/master/assets/bikeshare/week1/distribution_of_ride_time.png?raw=true)
 
 * Stations
   * There are `321` stations.
@@ -113,3 +103,26 @@ We notice there is another peak in the distribution of duration. There are more 
       * "Columbia Rd & Belmont St NW" `(1514)`
       * "39th & Calvert St NW / Stoddert"`(1386)`
       * "Adams Mill & Columbia Rd NW" `(1298)`
+
+```r
+############ Read Data from .csv ############
+q2data = read.csv("~/Downloads/2014-Q2-Trips-History-Data.csv")
+
+############ Duration #############
+duration = q2data$Duration
+duration = as.difftime(duration,"%Hh %Mm %Ss",units="secs")
+#sum of duration
+sum(duration, na.rm = TRUE)
+#histogram of duration
+duration_numeric = as.numeric(duration)
+hist(duration_numeric, breaks=8000,xlim=c(0,8000),main="Distribution of Duration")
+
+
+########## Date ##############
+# get the date of all rides
+startdate = as.Date(starttime,"%m/%d/%Y %H:%M")
+# create distribution table
+freqs = aggregate(startdate, by=list(startdate),FUN=length)
+#histogram
+ggplot(freqs, aes(x=Group.1,y=x)) + geom_bar(stat = "identity") + scale_x_date(breaks="1 month")+xlab("Date")+ylab("Frequency")+ggtitle("Distribution of Start time")
+```
