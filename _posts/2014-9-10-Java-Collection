@@ -1,0 +1,50 @@
+---
+layout: post
+title:  "Java Collection"
+date:   2014-09-10 09:22:44
+categories: Interview
+---
+
+#Java collection
+## Colletion
+* `Collection` interface entends `Iterable`.
+  * `Iterable` interface has only one method `Iterator<> iterator`
+  * `Iterable` use the new while loop `for( type tree : forest){}`
+* `Colletion`
+  * There is no usable Implementation of `Collection`
+  * Standard Methods:
+    * add(`element`)
+    * addAll(`collection`)
+    * remove(`element`)
+    * removeAll(`collection`)
+    * contains(`element`)
+    * containsAll(`collection`)
+    * size()
+  * Iterating a collection
+
+    ```java
+    Collection c = new Set();
+    Iterator i = c.iterator();
+    while(i.hasNext()){
+      Obejct o = i.next();
+      }
+    # or
+    for(object o :c){
+      object a = o;
+    }
+
+    ```
+
+### List
+* `list` interface is a subtype of `Collection` interface
+* Implementation
+  * `ArrayList`
+  * `LinkedList`
+  * `Vector`
+  * `Stack`
+* method
+  * All methods of `Collection`
+  * add(`index`, `element`)
+  * get(`index`)
+  * [ ]remove(`index`) (besides remove(`element`))
+  * :sunny:
