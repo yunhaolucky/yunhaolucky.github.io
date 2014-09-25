@@ -20,6 +20,7 @@ categories: Interview
     * contains(`element`)
     * containsAll(`collection`)
     * size()
+    * sort( )
   * Iterating a collection
 
     ```java
@@ -46,5 +47,65 @@ categories: Interview
   * All methods of `Collection`
   * add(`index`, `element`)
   * get(`index`)
-  * [ ]remove(`index`) (besides remove(`element`))
-  * :sunny:
+  * :question: remove(`index`) (besides remove(`element`))
+
+### Set
+* `Set` interface is also a subtype of `Collection` interface
+* Implementation
+  * `EnumSet` (Basic Type)
+  * `HashSet`
+  * `LinkedHashSet`
+    * guarantee the order of the elements
+  * `TreeSet`
+    * sorting order of set
+* Method
+  * All method of `collection`
+* Subtype
+  * SortedSort
+  * NavigableSort
+
+###Map
+* "NOT" a subtype of `Collection`
+* a interface represents a mapping between a key and a value
+* Implementation
+  * :sunny:HashMap
+  * Hashtable
+  * EnumMap
+  * IdentityHashMap
+  * IdentityHashMap
+  * LinkedHashMap
+  * Properties
+  * TreeMap
+  * WeekHashMap
+* Methods
+  * :sunny: put(`key`, `value`)
+  * :sunny: get('key')
+  * :sunny: keySet() (important for iterator)
+  * :sunny: remove(`key`)
+* Subtype
+  * SortedMap
+  * NavigatiableMap
+
+###Queue
+* `Queue` is a subtype of `Collection`
+* Implementation
+  * :sunny:LinkedList
+  * :sunny: PriorityQueue
+* Method:
+  * All method of `Collection`
+*Subset:
+  * Deque
+    * method:
+      * addFirst()
+      * addLast()
+      * getFirst()
+      * getLast()
+      * removeFirst()
+      * removeLast()
+
+
+#####stack
+* method
+  * push()
+  * peek()
+  * pop()
