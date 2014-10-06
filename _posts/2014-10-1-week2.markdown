@@ -1,0 +1,15 @@
+---
+layout: post
+title:  "Week 2"
+date:   2014-09-22 09:22:44
+categories: bikeshare
+---
+
+
+# Question
+*
+# Season
+
+
+
+![Distribution of Duration](https://github.com/yunhaolucky/yunhaolucky.github.io/blob/master/assets/bikeshare/week1/distributionofduration.png?raw=true)

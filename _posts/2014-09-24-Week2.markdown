@@ -1,0 +1,34 @@
+---
+layout: post
+title:  "Week 2"
+date:   2014-09-22 09:22:44
+categories: bikeshare
+---
+
+##Question##
+1. Because the data size is large, there are lots of outliers in the boxplot. Should I just omit them when I draw the boxplot?
+2. How to deal with qualitative variable in regression? e.g season and holiday.
+
+## First Look ##
+#### Preprocessing the data ####
+  * Date type: I change  `Datatime` to `Date` type.
+  * Categorical type: I change `weather`, `workingday` and `weather` to factor. Specially, I set `weather` as an ordinal factor as it describes the the severity of the weather conditions.
+#### Explore Explanatory variable ####
+
+```
+    datetime                   season   holiday   workingday weather       temp
+ Min.   :2011-01-01 00:00:00   1:2686   0:10575   0:3474     4:   1   Min.   : 0.82  
+ 1st Qu.:2011-07-02 07:15:00   2:2733   1:  311   1:7412     3: 859   1st Qu.:13.94  
+ Median :2012-01-01 20:30:00   3:2733                        2:2834   Median :20.50  
+ Mean   :2011-12-27 05:56:22   4:2734                        1:7192   Mean   :20.23  
+ 3rd Qu.:2012-07-01 12:45:00                                          3rd Qu.:26.24  
+ Max.   :2012-12-19 23:00:00                                          Max.   :41.00  
+     atemp          humidity        windspeed          casual         registered        count
+ Min.   : 0.76   Min.   :  0.00   Min.   : 0.000   Min.   :  0.00   Min.   :  0.0   Min.   :  1.0  
+ 1st Qu.:16.66   1st Qu.: 47.00   1st Qu.: 7.002   1st Qu.:  4.00   1st Qu.: 36.0   1st Qu.: 42.0  
+ Median :24.24   Median : 62.00   Median :12.998   Median : 17.00   Median :118.0   Median :145.0  
+ Mean   :23.66   Mean   : 61.89   Mean   :12.799   Mean   : 36.02   Mean   :155.6   Mean   :191.6  
+ 3rd Qu.:31.06   3rd Qu.: 77.00   3rd Qu.:16.998   3rd Qu.: 49.00   3rd Qu.:222.0   3rd Qu.:284.0  
+ Max.   :45.45   Max.   :100.00   Max.   :56.997   Max.   :367.00   Max.   :886.0   Max.   :977.0 
+```
+![Distribution of Duration](https://github.com/yunhaolucky/yunhaolucky.github.io/blob/master/assets/bikeshare/week1/distributionofduration.png?raw=true)
