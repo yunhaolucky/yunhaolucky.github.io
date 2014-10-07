@@ -16,6 +16,7 @@ categories: bikeshare
 
 #### Explore Explanatory variable ####
 There are 10886 observations. The data is comprised of the first 19 days of each month in 2011 and 2012.
+
 ```
     datetime                   season   holiday   workingday weather       temp
  Min.   :2011-01-01 00:00:00   1:2686   0:10575   0:3474     4:   1   Min.   : 0.82  
