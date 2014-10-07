@@ -14,7 +14,6 @@ categories: bikeshare
   * Date type: I change  `Datatime` to `Date` type.
   * Categorical type: I change `weather`, `workingday` and `weather` to factor. Specially, I set `weather` as an ordinal factor as it describes the the severity of the weather conditions.
 
-#### Explore Explanatory variable ####
 There are 10886 observations. The data is comprised of the first 19 days of each month in 2011 and 2012.
 
 ```
@@ -33,6 +32,8 @@ There are 10886 observations. The data is comprised of the first 19 days of each
  3rd Qu.:31.06   3rd Qu.: 77.00   3rd Qu.:16.998   3rd Qu.: 49.00   3rd Qu.:222.0   3rd Qu.:284.0  
  Max.   :45.45   Max.   :100.00   Max.   :56.997   Max.   :367.00   Max.   :886.0   Max.   :977.0
 ```
+#### Add hour variable ####
+
 
 #### Explore Count ####
 ![count](https://docs.google.com/uc?export=view&id=0B47woKFE0zXeLUszYkFpaGM4WGc)
@@ -54,3 +55,6 @@ There are 10886 observations. The data is comprised of the first 19 days of each
 * `temp and atemp`: We see a general trend of higher count for higher temperature.
 * `humidity` : There's not much difference in count for different humidity.
 * `windspeed`: We can notice from the plot that windspeed is a discrete variable and there is a general trend that higher count for smaller windspeed.
+
+#### Explore Explanatory variable ####
+![count and numerical variable](https://docs.google.com/uc?export=view&id=0B47woKFE0zXeU09hWjZRek1nWnc)
