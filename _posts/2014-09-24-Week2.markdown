@@ -33,6 +33,11 @@ There are 10886 observations. The data is comprised of the first 19 days of each
  Max.   :45.45   Max.   :100.00   Max.   :56.997   Max.   :367.00   Max.   :886.0   Max.   :977.0
 ```
 #### Add hour variable ####
+* According to general sense, time should be a factor of the count.
+* There is an obvious pattern in the boxplot of below.
+* Therefore, I add hour as an ordered factor of the dataset.
+![hour_count_boxplot](https://docs.google.com/uc?export=view&id=0B47woKFE0zXeX1hMM0w0Rml1dG8)
+
 
 
 #### Explore Count ####
@@ -58,3 +63,23 @@ There are 10886 observations. The data is comprised of the first 19 days of each
 
 #### Explore Explanatory variable ####
 ![count and numerical variable](https://docs.google.com/uc?export=view&id=0B47woKFE0zXeU09hWjZRek1nWnc)
+We can see the correlation between variables, e.g. `{season, hour} ~ {temp, humidity, windspeed}`.
+
+## Linear Regression ##
+
+
+### Evaluation -- RMSLE ###
+'Kaggle' using RMSLE to evaluate the result. The evaluation equation is :
+<img src="http://bit.ly/1EwgeFb"alt=" \sqrt{ \frac{1}{n} \sum_1^n((log(p_i+1) - log(a_i+1))^2 } \\p_i \text{is the ith predicted value}\\a_i \text{is the ith actual value}" />
+
+I draw a plot to see how this works visually(suppose a = 200):
+![rmsle_image](https://docs.google.com/uc?export=view&id=0B47woKFE0zXeZFFJUHFiNE9DYW8)
+We can see the farther the predicted value is from actual value, the bigger the rmsle. And the rmsle is relatively bigger when predicted value is small.
+
+To apply rmsle in my predict, I get `rmsle` = `0.856` while the mean benchmark is `1.58`. This rmsle is considered higher than its actual value as I use the same dataset to train and test.
+
+### First submission ###
+I use the above training method to predict the test data and `rmsle` provided by kaggle is `1.03653` ranking 746/923.
+####Useful Link ####
+
+1. [How to interpret linear regression output](http://dss.princeton.edu/online_help/analysis/interpreting_regression.htm)
