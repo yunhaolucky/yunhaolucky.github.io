@@ -7,7 +7,7 @@ categories: bikeshare
 
 ##Question##
 1. Because the data size is large, there are lots of outliers in the boxplot. Should I just omit them when I draw the boxplot?
-2. How to deal with qualitative variable in regression? e.g season and holiday.
+
 
 ## First Look ##
 #### Preprocessing the data ####
@@ -66,7 +66,63 @@ There are 10886 observations. The data is comprised of the first 19 days of each
 We can see the correlation between variables, e.g. `{season, hour} ~ {temp, humidity, windspeed}`.
 
 ## Linear Regression ##
+### Interpretation of R's output
+By running the `lm` function in r, I get the following output:
+```
+Residuals:
+    Min      1Q  Median      3Q     Max
+-353.76  -67.52  -12.21   53.34  482.47
+```
+Ideally, the distribution of residuals should be normal.We can see from the following diagnosis plot of the model.
+![Diagnosis plot of linear regression](https://docs.google.com/uc?export=view&id=0B47woKFE0zXeTVpDd1NzWk9KWVk)
 
+```
+Coefficients:
+              Estimate Std. Error t value Pr(>|t|)
+(Intercept) -3.598e+03  8.997e+01 -39.990  < 2e-16 ***
+datetime     2.762e-06  6.488e-08  42.570  < 2e-16 ***
+season2      2.591e+01  3.808e+00   6.804 1.07e-11 ***
+season3     -7.196e+00  4.920e+00  -1.463 0.143610
+season4      3.838e+00  3.460e+00   1.109 0.267365
+holiday1    -5.399e+00  6.351e+00  -0.850 0.395362
+workingday1  1.975e+00  2.273e+00   0.869 0.384925
+weather.L    1.464e+02  7.171e+01   2.041 0.041271 *  
+weather.Q   -6.375e+01  5.346e+01  -1.193 0.233088
+weather.C    8.449e+00  2.405e+01   0.351 0.725379
+temp         2.518e+00  8.378e-01   3.005 0.002662 **
+atemp        2.775e+00  7.332e-01   3.785 0.000154 ***
+humidity    -8.012e-01  7.235e-02 -11.074  < 2e-16 ***
+windspeed   -4.219e-01  1.388e-01  -3.040 0.002369 **
+hour.L       1.963e+02  5.323e+00  36.882  < 2e-16 ***
+hour.Q      -4.021e+02  5.660e+00 -71.047  < 2e-16 ***
+hour.C      -1.348e+02  5.283e+00 -25.514  < 2e-16 ***
+hour^4      -3.619e+01  5.185e+00  -6.980 3.13e-12 ***
+hour^5      -1.355e+01  5.041e+00  -2.689 0.007187 **
+hour^6       2.113e+02  5.038e+00  41.948  < 2e-16 ***
+hour^7       1.285e+01  5.019e+00   2.561 0.010452 *  
+hour^8      -1.526e+02  5.020e+00 -30.398  < 2e-16 ***
+hour^9       4.264e+00  5.020e+00   0.849 0.395638
+hour^10     -1.061e+00  5.020e+00  -0.211 0.832679
+hour^11      4.198e+00  5.018e+00   0.837 0.402836
+hour^12      1.118e+02  5.017e+00  22.276  < 2e-16 ***
+hour^13     -2.259e+01  5.014e+00  -4.506 6.69e-06 ***
+hour^14     -1.047e+02  5.011e+00 -20.900  < 2e-16 ***
+hour^15      3.092e+01  5.006e+00   6.177 6.78e-10 ***
+hour^16      2.642e+01  5.003e+00   5.281 1.31e-07 ***
+hour^17     -1.223e+01  5.001e+00  -2.446 0.014448 *  
+hour^18      3.627e+01  4.999e+00   7.255 4.29e-13 ***
+hour^19     -6.368e+00  4.999e+00  -1.274 0.202709
+hour^20     -2.705e+01  4.999e+00  -5.411 6.39e-08 ***
+hour^21      2.306e+00  4.999e+00   0.461 0.644663
+hour^22     -1.530e+01  4.998e+00  -3.062 0.002204 **
+hour^23     -4.679e+00  4.997e+00  -0.936 0.349085
+```
+
+```
+Residual standard error: 106.7 on 10849 degrees of freedom
+Multiple R-squared:  0.6543,  Adjusted R-squared:  0.6532
+F-statistic: 570.5 on 36 and 10849 DF,  p-value: < 2.2e-16
+```
 
 ### Evaluation -- RMSLE ###
 'Kaggle' using RMSLE to evaluate the result. The evaluation equation is :
@@ -80,6 +136,14 @@ To apply rmsle in my predict, I get `rmsle` = `0.856` while the mean benchmark i
 
 ### First submission ###
 I use the above training method to predict the test data and `rmsle` provided by kaggle is `1.03653` ranking 746/923.
-####Useful Link ####
 
+
+### Future Improvement ###
+1. Add more features to the dataset. A good example is http://mobilitylab.org/2014/01/27/explore-the-links-between-weather-and-capital-bikeshare-ridership/ where more data about weather are discussed.
+2. Using Non-linear regression and box-cox method.
+
+####Useful Link ####
+1. [Introduction to Multiple linear regression](http://dept.stat.lsa.umich.edu/~kshedden/Courses/Stat401/Notes/401-multreg.pdf)
 1. [How to interpret linear regression output](http://dss.princeton.edu/online_help/analysis/interpreting_regression.htm)
+2. [How to run a linear regression in R and do evaluation](http://brandonharris.io/kaggle-bike-sharing/)
+3. [How to build a simple model one step by step](http://brandonharris.io/kaggle-bike-sharing/)
