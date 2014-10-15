@@ -25,32 +25,42 @@ categories: bikeshare
 
 
 #### Add `hour` variable ####
-According to common sense, time affects the count of rides. And we can see this trend in the following plot. For this reason, I created a variable `hour` from `datetime`.
+According to common sense, time affects the count of rides. And we can see this trend in the following plot. For this reason, I created a `factor` variable `hour` from `datetime`.
 ![hour_count_boxplot](https://docs.google.com/uc?export=view&id=0B47woKFE0zXeX1hMM0w0Rml1dG8)
 
 
-#### Explore Count ####
+#### Explore `count` ####
+##### `count`, `casual` and `registered`
 ![count](https://docs.google.com/uc?export=view&id=0B47woKFE0zXeLUszYkFpaGM4WGc)
 
-* `count`
-  *  median = 145
-  *  mean = 191.5
-  *  Lots of outliers greater than 600.
-  *  We can notice from the above histogram that data is positively skewed.
-* We can notice similar patterns in registered count and casual count.
+```
+    count         registered     casual
+  Min.   :  1.0  Min.   :  0.0   Min.   :  0.00
+  1st Qu.: 42.0  1st Qu.: 36.0   1st Qu.:  4.00
+  Median :145.0  Median :118.0   Median : 17.00
+  Mean   :191.6  Mean   :155.6   Mean   : 36.02
+  3rd Qu.:284.0  3rd Qu.:222.0   3rd Qu.: 49.00
+  Max.   :977.0  Max.   :886.0   Max.   :367.00  
+```
+* `count` `registered` and `casual` have similar distribution (right skewed)
+* `casual` is generally smaller than `registered`
+
+##### `count` vs factors
 ![count and categorial variable](https://docs.google.com/uc?export=view&id=0B47woKFE0zXeYUt3R0hIVE55Rk0)
 
-* `weather` : the median increases as the weather becomes better. Only one day has extreme weather.
-* `season` : We see increases in median season summer and fall, respectively.
-* `holiday` and `workingday`: There is no obvious difference between two levels while workingday tends to have more outliers.
+* `weather` : The better the weather is, the larger the count is.
+* `season` : We see more rides in `summer` and `fall` than `spring` and `winter`.
+* `holiday` and `workingday`: There is no obvious effect on count.
+* We can see lots of outliers in the boxplot. This is reasonable as the data size is large.
 
+##### `count` vs numeric
 ![count and numerical variable](https://docs.google.com/uc?export=view&id=0B47woKFE0zXeM3FMYlF4V2NIbkU)
 
-* `temp and atemp`: We see a general trend of higher count for higher temperature.
-* `humidity` : There's not much difference in count for different humidity.
-* `windspeed`: We can notice from the plot that windspeed is a discrete variable and there is a general trend that higher count for smaller windspeed.
+* `temp` and `atemp`: Higher temperature tends to have more rides.
+* `humidity` : There's no obvious effect.
+* `windspeed`: Smaller windspeed tends to have more rides.
 
-#### Explore Explanatory variable ####
+##### Explore Explanatory variable #####
 ![count and numerical variable](https://docs.google.com/uc?export=view&id=0B47woKFE0zXeU09hWjZRek1nWnc)
 We can see the correlation between variables, e.g. `{season, hour} ~ {temp, humidity, windspeed}`.
 
