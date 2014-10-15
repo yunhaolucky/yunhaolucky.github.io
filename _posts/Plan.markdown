@@ -88,3 +88,72 @@ admin.site.register(Task,TaskAdmin)
 	is_published_recently.boolean = True
 	is_published_recently.short_description = 'Create in 24 hours?'
 ```
+The current data model is
+![hour_count_boxplot](https://docs.google.com/uc?export=view&id=0B47woKFE0zXeVzY4TkhpeU16d0k)
+
+### Set urls and views ###
+* create a index url in `/task/urls.py`
+
+```python
+from django.conf.urls import patterns, url
+from task import views
+urlpatterns = patterns('',
+    url(r'^$', views.index, name='index'),
+)
+```
+Also import `task/urls` into `urls.py`
+```python
+urlpatterns = patterns('',
+...
+url(r'^task/',include('tasks.urls')),
+)
+```
+Route Url contains parameters
+Add methods in `views.py`
+```python
+def detail(request,task_id):
+	response = "You're are looking at the details of a task %s."
+	return HttpResponse(response % task_id)
+
+def add_task(request,task_id):
+	return HttpResponse("You're add substasks on question %s."%task_id)
+```
+And to capture the corresponding parameter in url, We add following method in urls.py
+```python
+    url(r'^(?P<task_id>\d+)/$',views.detail,name ='detail'),
+    # ex:/task/5/add
+    url(r'(?P<task_id>\d+)/add/$',views.add_task,name = 'add_task'),
+```
+### From view to template ###
+ Add following to view.py
+```python
+'''
+from django.template import RequestContext, loader
+def show_task(request):
+	latest_task_list = Task.objects.order_by('-create_date')[:5]
+	template = loader.get_template('task/index.html')
+	context = RequestContext(request,{
+		'latest_task_list':latest_task_list,
+		})
+	return HttpResponse(template.render(context))
+'''
+def show_task(request):
+	latest_task_list = Task.objects.order_by('-create_date')[:5]
+	context = {'latest_task_list':latest_task_list}
+	return render(request, 'task/index.html',context)
+'''
+from django.http import Http404
+def detail(request,task_id):
+	response = "You're are looking at the details of a task %s."
+	try:
+		task = Task.objects.get(pk=task_id)
+	except Task.DoesNotExist:
+		raise Http404
+	context = {'task':task}
+	return render(request,'task/detail.html',context)
+'''
+def detail(request,task_id):
+	task = get_object_or_404(Task, id=task_id)
+	context = {'task':task}
+	return render(request,'task/detail.html',context)
+```
