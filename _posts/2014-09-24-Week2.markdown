@@ -12,7 +12,7 @@ categories: bikeshare
 
 
 ## First Look ##
-#### Preprocess the data ####
+### Preprocess the data ###
 * The dataset has `10886 observations`, which are made on the `first 19 days `of each month in 2011 and 2012.
 * The dataset has `12 varibles`
   * Explanatory variable
@@ -24,13 +24,13 @@ categories: bikeshare
     * `registered` + `casual` = `count`
 
 
-#### Add `hour` variable ####
+### Add `hour` variable ###
 According to common sense, time affects the count of rides. And we can see this trend in the following plot. For this reason, I created a `factor` variable `hour` from `datetime`.
 ![hour_count_boxplot](https://docs.google.com/uc?export=view&id=0B47woKFE0zXeX1hMM0w0Rml1dG8)
 
 
-#### Explore `count` ####
-##### `count`, `casual` and `registered`
+### Explore `count` ###
+#### count, casual and registered
 ![count](https://docs.google.com/uc?export=view&id=0B47woKFE0zXeLUszYkFpaGM4WGc)
 
 ```
@@ -42,10 +42,10 @@ According to common sense, time affects the count of rides. And we can see this 
   3rd Qu.:284.0  3rd Qu.:222.0   3rd Qu.: 49.00
   Max.   :977.0  Max.   :886.0   Max.   :367.00  
 ```
-* `count` `registered` and `casual` have similar distribution (right skewed)
+* count,registered and casual have similar distribution (right skewed)
 * `casual` is generally smaller than `registered`
 
-##### `count` vs factors
+#### `count` vs factors
 ![count and categorial variable](https://docs.google.com/uc?export=view&id=0B47woKFE0zXeYUt3R0hIVE55Rk0)
 
 * `weather` : The better the weather is, the larger the count is.
@@ -53,45 +53,57 @@ According to common sense, time affects the count of rides. And we can see this 
 * `holiday` and `workingday`: There is no obvious effect on count.
 * We can see lots of outliers in the boxplot. This is reasonable as the data size is large.
 
-##### `count` vs numeric
+#### `count` vs numeric
 ![count and numerical variable](https://docs.google.com/uc?export=view&id=0B47woKFE0zXeM3FMYlF4V2NIbkU)
 
 * `temp` and `atemp`: Higher temperature tends to have more rides.
 * `humidity` : There's no obvious effect.
 * `windspeed`: Smaller windspeed tends to have more rides.
 
-##### Explore Explanatory variable #####
-![count and numerical variable](https://docs.google.com/uc?export=view&id=0B47woKFE0zXeU09hWjZRek1nWnc)
-We can see the correlation between variables, e.g. `{season, hour} ~ {temp, humidity, windspeed}`.
 
 ## Linear Regression ##
+I do linear regression with all variables in the data with the following code:
+```python
+count.feature = train[,-c(10,11)] #remove casual and registered from varaibles
+train.lm <- lm(count ~ ., data=count.feature) #linear regression
+```
 ### Interpretation of R's output
-By running the `lm` function in r, I get the following output:
-```
-Residuals:
-    Min      1Q  Median      3Q     Max
--353.76  -67.52  -12.21   53.34  482.47
-```
-Ideally, the distribution of residuals should be normal.We can see from the following diagnosis plot of the model.
-![Diagnosis plot of linear regression](https://docs.google.com/uc?export=view&id=0B47woKFE0zXeTVpDd1NzWk9KWVk)
 
 ```
 Coefficients:
               Estimate Std. Error t value Pr(>|t|)
 (Intercept) -3.598e+03  8.997e+01 -39.990  < 2e-16 ***
 datetime     2.762e-06  6.488e-08  42.570  < 2e-16 ***
-season2      2.591e+01  3.808e+00   6.804 1.07e-11 ***
-season3     -7.196e+00  4.920e+00  -1.463 0.143610
-season4      3.838e+00  3.460e+00   1.109 0.267365
-holiday1    -5.399e+00  6.351e+00  -0.850 0.395362
-workingday1  1.975e+00  2.273e+00   0.869 0.384925
-weather.L    1.464e+02  7.171e+01   2.041 0.041271 *  
-weather.Q   -6.375e+01  5.346e+01  -1.193 0.233088
-weather.C    8.449e+00  2.405e+01   0.351 0.725379
+```
+```
 temp         2.518e+00  8.378e-01   3.005 0.002662 **
 atemp        2.775e+00  7.332e-01   3.785 0.000154 ***
 humidity    -8.012e-01  7.235e-02 -11.074  < 2e-16 ***
 windspeed   -4.219e-01  1.388e-01  -3.040 0.002369 **
+```
+* All numeric variables have some effects on `count`.
+* `atemp` and `temp` have similar positive coefficients but `atemp` has smaller sd.
+* `humidity` and `windspeed` have negative effects on count.
+
+```
+holiday1    -5.399e+00  6.351e+00  -0.850 0.395362
+workingday1  1.975e+00  2.273e+00   0.869 0.384925
+```
+
+* `holiday` and `workingday`: No significant effect.
+
+```
+season2      2.591e+01  3.808e+00   6.804 1.07e-11 ***
+season3     -7.196e+00  4.920e+00  -1.463 0.143610
+season4      3.838e+00  3.460e+00   1.109 0.267365
+weather.L    1.464e+02  7.171e+01   2.041 0.041271 *  
+weather.Q   -6.375e+01  5.346e+01  -1.193 0.233088
+weather.C    8.449e+00  2.405e+01   0.351 0.725379
+```
+* `season`:  only Summer indicator has significant effect on count.
+* `weather`: only `small rain` indicator has effect on count.
+
+```
 hour.L       1.963e+02  5.323e+00  36.882  < 2e-16 ***
 hour.Q      -4.021e+02  5.660e+00 -71.047  < 2e-16 ***
 hour.C      -1.348e+02  5.283e+00 -25.514  < 2e-16 ***
@@ -116,12 +128,20 @@ hour^21      2.306e+00  4.999e+00   0.461 0.644663
 hour^22     -1.530e+01  4.998e+00  -3.062 0.002204 **
 hour^23     -4.679e+00  4.997e+00  -0.936 0.349085
 ```
+* `hour`: {1 - 8,12 - 18,20, 22} have effect on count.
 
 ```
 Residual standard error: 106.7 on 10849 degrees of freedom
 Multiple R-squared:  0.6543,  Adjusted R-squared:  0.6532
 F-statistic: 570.5 on 36 and 10849 DF,  p-value: < 2.2e-16
 ```
+* R-squared: 0.6543 (Explained variation / Total variation). I use this as an benchmark to compare different models.
+* F-statistics: p-value is small and there is at least one variable has effect on count.
+```
+
+### Diagnosis
+![Diagnosis plot of linear regression](https://docs.google.com/uc?export=view&id=0B47woKFE0zXeTVpDd1NzWk9KWVk)
+
 
 ### Evaluation -- RMSLE ###
 'Kaggle' using RMSLE to evaluate the result. The evaluation equation is :
@@ -136,6 +156,9 @@ To apply rmsle in my predict, I get `rmsle` = `0.856` while the mean benchmark i
 ### First submission ###
 I use the above training method to predict the test data and `rmsle` provided by kaggle is `1.03653` ranking 746/923.
 
+##### Explore Explanatory variable #####
+![count and numerical variable](https://docs.google.com/uc?export=view&id=0B47woKFE0zXeU09hWjZRek1nWnc)
+We can see the correlation between variables, e.g. `{season, hour} ~ {temp, humidity, windspeed}`.
 
 ### Future Improvement ###
 1. Add more features to the dataset. A good example is http://mobilitylab.org/2014/01/27/explore-the-links-between-weather-and-capital-bikeshare-ridership/ where more data about weather are discussed.
