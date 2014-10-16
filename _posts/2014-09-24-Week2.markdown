@@ -4,13 +4,6 @@ title:  "Week 2"
 date:   2014-09-22 09:22:44
 categories: bikeshare
 ---
-
-#Summary#
-
-##Question##
-1. Coefficient vs p-value?
-
-
 ## First Look ##
 ### Preprocess the data ###
 * The dataset has `10886 observations`, which are made on the `first 19 days `of each month in 2011 and 2012.
@@ -245,9 +238,20 @@ F-statistic: 366.7 on 41 and 10844 DF,  p-value: < 2.2e-16
 *  `rmsle` on training data is 0.85405.
 * Kaggle's result: `rmsle = 0.92049`. ranking 765/982.
 
-## Model 3: Feature Engineering ###
+## Variable Selection ###
+* R-square is a good indicator of model because our goal is to make accurate predictions.
+* I perform all-subsets regression using the leaps( ) function from the leaps package.
+![all_subsets_regression](https://docs.google.com/uc?export=view&id=0B47woKFE0zXeb0R3QzdoZTZxMUk)
+* We see from the plot that the best r-square is achieved by including all variables in the training data.
 
+### Other tricks ###
+1. `Rmsle` penalizes more for smaller prediction than bigger prediction. Manually setting predictions, which are smaller than 10, to 10 improve the performance a lot.(rmsle = 0.836)
+2. I also try support vector machine with linear kernel. (`rmsle = 0.732`)
 
+### Future Improvement ###
+1. linear regression(interaction, multicollinearity)
+![all_subsets_regression](https://docs.google.com/uc?export=view&id=0B47woKFE0zXeQXZUMU5Xc1RIZVk)
+2. Non-linear regression
 ####Reference and Useful Link ####
 1. [Introduction to Multiple linear regression](http://dept.stat.lsa.umich.edu/~kshedden/Courses/Stat401/Notes/401-multreg.pdf)
 1. [How to interpret linear regression output](http://dss.princeton.edu/online_help/analysis/interpreting_regression.htm)
