@@ -61,7 +61,7 @@ According to common sense, time affects the count of rides. And we can see this 
 * `windspeed`: Smaller windspeed tends to have more rides.
 
 
-## Linear Regression ##
+## Model 1 : Linear Regression ##
 I do linear regression with all variables in the data with the following code:
 ```python
 count.feature = train[,-c(10,11)] #remove casual and registered from varaibles
@@ -150,6 +150,7 @@ F-statistic: 570.5 on 36 and 10849 DF,  p-value: < 2.2e-16
 * The test dataset has `6863 observations`, which are made on the `last 10 days `of each month in 2011 and 2012.
 * `583` predictions are smaller than 0. I set those predictions = 0 mannully.
 * Kaggle's resutl: `rmsle = 1.03653` ranking 746/923.
+
 #### Evaluation -- RMSLE ####
 'Kaggle' using RMSLE to evaluate the result. The evaluation equation is :
 <img src="http://bit.ly/1EwgeFb"alt=" \sqrt{ \frac{1}{n} \sum_1^n((log(p_i+1) - log(a_i+1))^2 } \\p_i \text{is the ith predicted value}\\a_i \text{is the ith actual value}" />
@@ -159,9 +160,16 @@ F-statistic: 570.5 on 36 and 10849 DF,  p-value: < 2.2e-16
 
   We can see the farther the predicted value is from actual value, the bigger the rmsle. And the rmsle is relatively bigger when predicted value is small.
 
+# Model 2: `Count` = `Registered` + `Casual` #
+### Add `weekday` variable ###
+In model 1, both `workingday` and `holiday` does not show a significant linear relationship with `count`. But it is reasonable to include `weekday` when predicting `registered` and `casual`.
+ ![weekday and casual](https://docs.google.com/uc?export=view&id=https://docs.google.com/uc?export=view&id=0B47woKFE0zXeTnZXci1tXzlEZ2M)
+
+
+
 
 ##### Explore Explanatory variable #####
-![count and numerical variable](https://docs.google.com/uc?export=view&id=0B47woKFE0zXeU09hWjZRek1nWnc)
+![count and numerical variable](https://docs.google.com/uc?export=view&id=https://docs.google.com/uc?export=view&id=0B47woKFE0zXeTnZXci1tXzlEZ2M)
 We can see the correlation between variables, e.g. `{season, hour} ~ {temp, humidity, windspeed}`.
 
 ### Future Improvement ###
