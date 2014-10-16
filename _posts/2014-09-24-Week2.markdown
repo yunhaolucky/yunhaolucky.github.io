@@ -249,10 +249,12 @@ F-statistic: 366.7 on 41 and 10844 DF,  p-value: < 2.2e-16
 1. `Rmsle` penalizes more for smaller prediction than bigger prediction. Manually setting predictions, which are smaller than 10, to 10 improve the performance a lot.(rmsle = 0.836)
 2. I also try support vector machine with linear kernel. (`rmsle = 0.732`)
 
+
 ### Future Improvement ###
 1. linear regression(interaction, multicollinearity)
 ![all_subsets_regression](https://docs.google.com/uc?export=view&id=0B47woKFE0zXeQXZUMU5Xc1RIZVk)
 2. Non-linear regression
+
 ####Reference and Useful Link ####
 1. [Introduction to Multiple linear regression](http://dept.stat.lsa.umich.edu/~kshedden/Courses/Stat401/Notes/401-multreg.pdf)
 1. [How to interpret linear regression output](http://dss.princeton.edu/online_help/analysis/interpreting_regression.htm)
