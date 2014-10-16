@@ -8,7 +8,7 @@ categories: bikeshare
 #Summary#
 
 ##Question##
-1. Because the data size is large, there are lots of outliers in the boxplot. Should I just omit them when I draw the boxplot?
+1. Coefficient vs p-value?
 
 
 ## First Look ##
@@ -139,7 +139,7 @@ F-statistic: 570.5 on 36 and 10849 DF,  p-value: < 2.2e-16
 * F-statistics: p-value is small and there is at least one variable has effect on count.
 ```
 
-### Diagnosis of linear regression model
+### Diagnosis of linear regression model ###
 ![Diagnosis plot of linear regression](https://docs.google.com/uc?export=view&id=0B47woKFE0zXeTVpDd1NzWk9KWVk)
 * `Equal Variance` : violated.
 * `Normal`: The curve in qqplot(third) is almost linear.
@@ -163,20 +163,92 @@ F-statistic: 570.5 on 36 and 10849 DF,  p-value: < 2.2e-16
 # Model 2: `Count` = `Registered` + `Casual` #
 ### Add `weekday` variable ###
 In model 1, both `workingday` and `holiday` does not show a significant linear relationship with `count`. But it is reasonable to include `weekday` when predicting `registered` and `casual`.
- ![weekday and casual](https://docs.google.com/uc?export=view&id=https://docs.google.com/uc?export=view&id=0B47woKFE0zXeTnZXci1tXzlEZ2M)
+![count and numerical variable](https://docs.google.com/uc?export=view&id=0B47woKFE0zXeNkt5ODlvMW5UaW8)
+
+### Linear Regression of `casual` and `registered`
+Similarly, I do linear regression on `casual` and `registered`.
+
+```
+                  registered       Casual
+                  coef   sig    coef   sig
+(Intercept)      -3166.33 *    -453.458 *
+datetime         0        *    0        *
+season2          16.561   *    9.237    *
+season3          -6.282        -1.173
+season4          4.848         -1.428
+holiday1         10.725        -8.434   *
+workingday1      37.939   *    -32.151  *
+weekdayTuesday   6.203         -2.51    *
+weekdayWednesday 8.455    *    -2.125   *
+weekdayThursday  10.47    *    -2.368   *
+weekdayFriday    7.212    *    4.967    *
+weekdaySaturday  12.51    *    7.423    *
+```
+* Date variable have opposite effects on casual and registered.
+* weekdaySunday is not included because Sunday dependes on workingday and weekSaturday.
+
+```
+weather.L        129.96   *    12.953   *
+weather.Q        -58.579       -2.187
+weather.C        7.539         -0.618
+temp             0.818         1.468    *
+atemp            2.41     *    0.6      *
+humidity         -0.461   *    -0.312   *
+windspeed        -0.19         -0.203   *
+```
+* Weather variables have similar effects on the casual and registered.
+* Weather variables have slightly bigger effects on casual than registered.
+
+```
+hour.L           157.998  *    38.731   *
+hour.Q           -318.345 *    -84.385  *
+hour.C           -99.732  *    -35.417  *
+hour^4           -68.184  *    32.265   *
+hour^5           -23.522  *    10.098   *
+hour^6           217.74   *    -6.485   *
+hour^7           13.092   *    -0.242   *
+hour^8           -152.609 *    0.001    *
+hour^9           8.638    *    -4.343   *
+hour^10          -0.464        -0.635
+hour^11          -0.011        4.261    *
+hour^12          108.647  *    3.087    *
+hour^13          -20.829  *    -1.775   *
+hour^14          -102.62  *    -2.097   *
+hour^15          30.305   *    0.605    *
+hour^16          26.324   *    0.092    *
+hour^17          -13.326  *    1.082    *
+hour^18          34.636   *    1.649    *
+hour^19          -4.994        -1.376
+hour^20          -24.965  *    -2.086   *
+hour^21          3.074         -0.781
+hour^22          -14.019  *    -1.282   *
+hour^23          -4.917        0.23
+
+```
+* Time variables affects registered more than casual.
+* `casual` and `registered` have similar significant variables.
+
+```
+Registered:
+Residual standard error: 90.2 on 10844 degrees of freedom
+Multiple R-squared:  0.6447,	Adjusted R-squared:  0.6434
+F-statistic:   480 on 41 and 10844 DF,  p-value: < 2.2e-16
+Casual:
+Residual standard error: 32.4 on 10844 degrees of freedom
+Multiple R-squared:  0.581,	Adjusted R-squared:  0.5794
+F-statistic: 366.7 on 41 and 10844 DF,  p-value: < 2.2e-16
+```
+* According to R-quared, the linear model explains `registered` better.
+* `rmsle.casual = 1.007805` `rmsle.count = 0.8792593`
+### Combination and Prediction ###
+* `count = casual + registered` to predict count in test data.
+*  `rmsle` on training data is 0.85405.
+* Kaggle's result: `rmsle = 0.92049`. ranking 765/982.
+
+## Model 3: Feature Engineering ###
 
 
-
-
-##### Explore Explanatory variable #####
-![count and numerical variable](https://docs.google.com/uc?export=view&id=https://docs.google.com/uc?export=view&id=0B47woKFE0zXeTnZXci1tXzlEZ2M)
-We can see the correlation between variables, e.g. `{season, hour} ~ {temp, humidity, windspeed}`.
-
-### Future Improvement ###
-1. Add more features to the dataset. A good example is http://mobilitylab.org/2014/01/27/explore-the-links-between-weather-and-capital-bikeshare-ridership/ where more data about weather are discussed.
-2. Using Non-linear regression and box-cox method.
-
-####Useful Link ####
+####Reference and Useful Link ####
 1. [Introduction to Multiple linear regression](http://dept.stat.lsa.umich.edu/~kshedden/Courses/Stat401/Notes/401-multreg.pdf)
 1. [How to interpret linear regression output](http://dss.princeton.edu/online_help/analysis/interpreting_regression.htm)
 2. [How to run a linear regression in R and do evaluation](http://brandonharris.io/kaggle-bike-sharing/)
